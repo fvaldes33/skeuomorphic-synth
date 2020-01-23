@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import styled, { IThemeStyledFunction } from '../../styled';
-import { space, SpaceProps, BackgroundProps, background } from 'styled-system';
+import { space, SpaceProps, BackgroundProps, color } from 'styled-system';
 
 type ButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 type ButtonStyleProps = IThemeStyledFunction & ButtonProps & SpaceProps & BackgroundProps & {
@@ -16,6 +16,12 @@ const ButtonInner = styled.div`
   transition: all 0.2s ease;
 `;
 
+const defaultShadowPressed = `rgba(166, 171, 189, 0) 5px 5px 10px, rgb(244, 244, 244) -5px -5px 10px, rgba(166, 171, 189, 1) 3px 5px 10px inset, rgb(238, 238, 238) 4px 4px 4px inset`;
+const defaultShadowRegular = `5px 5px 10px #A6ABBD, -5px -5px 10px #F4F4F4, inset 0px 1px 8px rgba(0, 0, 0, 0.05), inset 4px 4px 4px rgba(238, 238, 238, 0.5)`;
+
+const darkShadowPressed = `rgba(166, 171, 189, 0) 5px 5px 10px, rgb(244, 244, 244) -5px -5px 10px, rgba(0, 0, 0, 1) 3px 5px 10px inset, rgb(0, 0, 0) 4px 4px 4px inset`;
+const darkShadowRegular = `5px 5px 10px #A6ABBD, -5px -5px 10px #F4F4F4, inset 0px 1px 8px rgba(166, 171, 189, 0.05), inset 4px 4px 4px rgba(166, 171, 189, 0.5)`;
+
 const ButtonStyles = styled.button<ButtonStyleProps>`
   appearance: none;
   border: none;
@@ -28,15 +34,15 @@ const ButtonStyles = styled.button<ButtonStyleProps>`
   padding: 15px;
 
   ${ButtonInner} {
-    ${props => props.background === 'black' ? `
-      border: 1px solid #D9DCE5;
-      box-shadow: ${!props.down ? `5px 5px 10px #A6ABBD, -5px -5px 10px #F4F4F4` : `inset 2px 5px 5px #A6ABBD`};
+    ${props => props.bg === 'dark' ? `
+      border: 2px solid #D9DCE5;
+      box-shadow: ${props.down ? darkShadowPressed : darkShadowRegular};
     ` : `
       background: #DCDFE7;
-      box-shadow: ${!props.down ? `5px 5px 10px #A6ABBD, -5px -5px 10px #F4F4F4, inset 0px 1px 8px rgba(0, 0, 0, 0.05), inset 4px 4px 4px rgba(238, 238, 238, 0.5)` : `inset 5px 5px 10px #A6ABBD`};
+      box-shadow: ${props.down ? defaultShadowPressed : defaultShadowRegular};
     `}
 
-    ${background}
+    ${color}
   }
 
   ${space}
@@ -46,7 +52,7 @@ const ButtonComponent: React.FC<ButtonStyleProps> = ({ ref, onClick, children, b
   const [mouseDown, setMouseDown] = useState<boolean>(false);
 
   return (
-    <ButtonStyles background={bg} down={mouseDown} onMouseDown={() => setMouseDown(true)} onMouseUp={() => setMouseDown(false)} onClick={onClick} {...rest}>
+    <ButtonStyles bg={bg} down={mouseDown} onMouseDown={() => setMouseDown(true)} onMouseUp={() => setMouseDown(false)} onClick={onClick} {...rest}>
       <ButtonInner>
         {children}
       </ButtonInner>

@@ -24,7 +24,7 @@ export const colors: ThemeColors = {
   primary: '#8661C2',
   secondary: '#B3A1D4',
   tertiary: '#D4A1A1',
-  dark: '#262626',
+  dark: '#2E3337',
   link: '#1890ff',
   success: '#52c41a',
   warning: '#faad14',

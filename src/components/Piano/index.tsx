@@ -46,13 +46,13 @@ const Piano: React.FC<{ octave?: number }> = ({ octave = 4 }) => {
         <Slot placement="1 / 1 / span 1 / span 4">
           <Grid columns={8}>
             <Slot placement="1 / 1 / span 1 / span 3">
-              <PianoKey keyCode="Digit1" pl={60} octave={octave - 1} color="black" note="F#" />
+              <PianoKey keyCode="Digit1" pl={60} octave={octave - 1} color="dark" note="F#" />
             </Slot>
             <Slot placement="1 / 4 / span 1 / span 2">
-              <PianoKey keyCode="Digit2" color="black" octave={octave - 1} note="G#" />
+              <PianoKey keyCode="Digit2" color="dark" octave={octave - 1} note="G#" />
             </Slot>
             <Slot placement="1 / 6 / span 1 / span 3">
-              <PianoKey keyCode="Digit3" pr={60} color="black" octave={octave - 1} note="A#" />
+              <PianoKey keyCode="Digit3" pr={60} color="dark" octave={octave - 1} note="A#" />
             </Slot>
           </Grid>
         </Slot>
@@ -60,10 +60,10 @@ const Piano: React.FC<{ octave?: number }> = ({ octave = 4 }) => {
         <Slot placement="1 / 5 / span 1 / span 3">
           <Grid columns={6}>
             <Slot placement="1 / 1 / span 1 / span 3">
-              <PianoKey keyCode="Digit5" pl={60} color="black" octave={octave} note="C#" />
+              <PianoKey keyCode="Digit5" pl={60} color="dark" octave={octave} note="C#" />
             </Slot>
             <Slot placement="1 / 4 / span 1 / span 3">
-              <PianoKey keyCode="Digit6" pr={60} color="black" octave={octave} note="D#" />
+              <PianoKey keyCode="Digit6" pr={60} color="dark" octave={octave} note="D#" />
             </Slot>
           </Grid>
         </Slot>
@@ -71,13 +71,13 @@ const Piano: React.FC<{ octave?: number }> = ({ octave = 4 }) => {
         <Slot placement="1 / 8 / span 1 / span 4">
           <Grid columns={8}>
             <Slot placement="1 / 1 / span 1 / span 3">
-              <PianoKey keyCode="Digit7" pl={60} color="black" octave={octave} note="F#" />
+              <PianoKey keyCode="Digit7" pl={60} color="dark" octave={octave} note="F#" />
             </Slot>
             <Slot placement="1 / 4 / span 1 / span 2">
-              <PianoKey keyCode="Digit8" color="black" octave={octave} note="G#" />
+              <PianoKey keyCode="Digit8" color="dark" octave={octave} note="G#" />
             </Slot>
             <Slot placement="1 / 6 / span 1 / span 3">
-              <PianoKey keyCode="Digit9" pr={60} color="black" octave={octave} note="A#" />
+              <PianoKey keyCode="Digit9" pr={60} color="dark" octave={octave} note="A#" />
             </Slot>
           </Grid>
         </Slot>
@@ -85,10 +85,10 @@ const Piano: React.FC<{ octave?: number }> = ({ octave = 4 }) => {
         <Slot placement="1 / 12 / span 1 / span 3">
           <Grid columns={6}>
             <Slot placement="1 / 1 / span 1 / span 3">
-              <PianoKey keyCode="Minus" pl={60} color="black" octave={octave + 1} note="C#" />
+              <PianoKey keyCode="Minus" pl={60} color="dark" octave={octave + 1} note="C#" />
             </Slot>
             <Slot placement="1 / 4 / span 1 / span 3">
-              <PianoKey keyCode="Equal" pr={60} color="black" octave={octave + 1} note="D#" />
+              <PianoKey keyCode="Equal" pr={60} color="dark" octave={octave + 1} note="D#" />
             </Slot>
           </Grid>
         </Slot>
