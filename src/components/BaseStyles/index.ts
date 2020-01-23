@@ -1,8 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const BaseStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Poppins:300,700&display=swap');
-
   *, *::before, *::after {
     box-sizing: inherit;
     box-sizing: border-box;
@@ -32,7 +30,7 @@ export const BaseStyles = createGlobalStyle`
     list-style: none;
   }
   body {
-    font-family: "Poppins", sans-serif;
+    font-family: "Helvetica", sans-serif;
   }
   html {
     box-sizing: border-box;

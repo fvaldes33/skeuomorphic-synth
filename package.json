@@ -1,5 +1,5 @@
 {
-  "name": "synth",
+  "name": "skeuomorphic-synth",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -42,6 +42,9 @@
   "devDependencies": {
     "@types/styled-components": "^4.4.2",
     "@types/styled-system": "^5.1.4",
-    "csstype": "^2.6.8"
+    "babel-plugin-styled-components": "^1.10.6",
+    "csstype": "^2.6.8",
+    "react-app-rewire-styled-components": "^3.0.2",
+    "react-app-rewired": "^2.1.5"
   }
 }
