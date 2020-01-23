@@ -1,0 +1,13 @@
+{
+  "name": "synth",
+  "version": 2,
+  "github": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    }
+  ]
+}
