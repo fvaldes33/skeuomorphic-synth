@@ -1,9 +1,9 @@
 import React, { useState, forwardRef } from 'react';
 import styled, { IThemeStyledFunction } from '../../styled';
-import { space, ColorProps, SpaceProps, BackgroundProps, color, get } from 'styled-system';
+import { space, ColorProps, SpaceProps, BackgroundProps, color, get, BorderProps, border } from 'styled-system';
 
 type ButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-type ButtonStyleProps = IThemeStyledFunction & ButtonProps & SpaceProps & ColorProps & BackgroundProps & {
+type ButtonStyleProps = IThemeStyledFunction & ButtonProps & BorderProps & SpaceProps & ColorProps & BackgroundProps & {
   bg?: string;
   down?: boolean;
 };
@@ -58,6 +58,7 @@ const ButtonStyles = styled.button<ButtonStyleProps>`
   }
 
   ${space}
+  ${border}
 `;
 
 const ButtonComponent: React.FC<ButtonStyleProps> = ({ ref, onClick, children, bg, ...rest }) => {

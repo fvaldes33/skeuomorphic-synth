@@ -7,6 +7,7 @@ export interface ThemeColors {
   secondary: CSS.ColorProperty;
   tertiary: CSS.ColorProperty;
   dark: CSS.ColorProperty;
+  light: CSS.ColorProperty;
 
   link: CSS.ColorProperty;
   success: CSS.ColorProperty;
@@ -21,9 +22,9 @@ export interface ThemeColors {
 export const colors: ThemeColors = {
   white: '#FFFFFF',
   black: '#000000',
-  primary: '#8661C2',
-  secondary: '#B3A1D4',
-  tertiary: '#D4A1A1',
+  primary: '#5CB6F2',
+  secondary: '#02CA71',
+  tertiary: '#F97133',
   dark: '#2E3337',
   link: '#1890ff',
   success: '#52c41a',
@@ -33,4 +34,5 @@ export const colors: ThemeColors = {
   text: '#000',
   disabled: '#f5222d',
   border: '#423EA2',
+  light: '#D9DCE5'
 };

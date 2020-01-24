@@ -1,5 +1,6 @@
 import { Loop, MembraneSynth } from 'tone';
 import { BaseSubject } from './BaseSubject';
+import { start } from 'tone';
 import { MetronomeState } from '../interfaces';
 
 export class MetronomeSubject extends BaseSubject<MetronomeState> {
@@ -19,7 +20,9 @@ export class MetronomeSubject extends BaseSubject<MetronomeState> {
     }, "4n");
   }
 
-  enable() {
+  async enable() {
+    await start();
+
     if (this.loop.state === 'started') {
       this.loop.stop();
     } else {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { CanvasSpace } from 'pts';
 import { Box } from '../Box';
 import styled from '../../styled';
 import Machine from '../../engine/MachineSubject';
@@ -19,50 +20,48 @@ const DisplayStyles = styled(Box)`
     margin: 0;
     color: white;
   }
+
+  canvas {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const Display: React.FC<any> = () => {
 
-  const cv = useRef<HTMLCanvasElement>(null);
+  const cv = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<MachineState>();
 
   useEffect(
     () => {
-      // let raf: any;
+      let space: CanvasSpace;
 
-      // const draw = () => {
-      //   const values: any = Machine.waveform.getValue();
-      //   if (cv && cv.current) {
-      //     const ctx = cv.current.getContext("2d");
+      if (cv.current) {
+        space = new CanvasSpace(cv.current);
+        const form = space.getForm();
+        space.add({
+          animate: () => {
+            if (Machine.synth.context.state === "suspended") {
+              space.pause();
+            }
 
-      //     if (ctx) {
-      //       ctx.clearRect(0, 0, 345, 100);
-      //       ctx.beginPath();
-      //       ctx.lineJoin = "round";
-      //       ctx.lineWidth = 3;
-      //       ctx.strokeStyle = "#333";
-      //       ctx.moveTo(0, (values[0] / 255));
-      //       for (var i = 1, len = values.length; i < len; i++) {
-      //         var val = values[i] / 255;
-      //         var x = 345 * (i / len);
-      //         var y = val * 100;
-      //         ctx.lineTo(x, y + 50);
-      //       }
-      //       ctx.stroke();
-      //     }
-      //   }
+            let area = space.size.$divide(1);
+            let idx = space.pointer.$divide(area).floor();
+            let rect = [idx.$multiply(area), idx.$multiply(area).add(area)];
+            // let t1 = Machine.sound.timeDomainTo(area, rect[0].$subtract(0, area.y / 2));
+            // let t2 = t1.map(t => t.$add(0, area.y)).reverse();
+            let freqs: any = Machine.sound.freqDomainTo([area.x, area.y / 2], [rect[0].x, 0]).map(f => [[f.x, rect[0].y + area.y / 2 - f.y], [f.x, rect[0].y + area.y / 2 + f.y]]);
 
-      //   raf = requestAnimationFrame(draw);
-      // };
+            form.stroke('#2E3337');
+            form.fill("#2E3337").rect(rect);
+            form.strokeOnly("#5CB6F2", Math.ceil(area.x / 1024)).lines(freqs);
+          }
+        })
+        space.play();
+      }
 
       const sub = Machine.state$.subscribe((next: MachineState) => {
         setState(next);
-
-        // if (!next.note) {
-        //   cancelAnimationFrame(raf);
-        // } else {
-        //   draw()
-        // }
       });
 
       return () => sub.unsubscribe();
@@ -77,8 +76,7 @@ const Display: React.FC<any> = () => {
       </Slot>
 
       <Slot placement="2 / 1 / span 4 / span 4">
-        <Box height="100%" color="dark" bg="white">
-          <canvas width="345" height="100" ref={cv}></canvas>
+        <Box height="100%" bg="dark" ref={cv}>
         </Box>
       </Slot>
 

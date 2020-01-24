@@ -12,22 +12,6 @@ const Home = () => {
     ));
   }
 
-  // const ninePad = () => {
-  //   return Array.from(Array(3).keys()).map((index: number) => (
-  //     <>
-  //       <Slot placement={`4 / ${(index + 1)} / span 1 / span 1`}>
-  //         <Button />
-  //       </Slot>
-  //       <Slot placement={`5 / ${(index + 1)} / span 1 / span 1`}>
-  //         <Button />
-  //       </Slot>
-  //       <Slot placement={`6 / ${(index + 1)} / span 1 / span 1`}>
-  //         <Button />
-  //       </Slot>
-  //     </>
-  //   ));
-  // }
-
   const [octave, setOctave] = useState<number>(4);
   useEffect(
     () => {
