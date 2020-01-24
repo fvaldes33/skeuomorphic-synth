@@ -30,7 +30,7 @@ export const BaseStyles = createGlobalStyle`
     list-style: none;
   }
   body {
-    font-family: "Helvetica", sans-serif;
+    font-family: 'VT323', monospace;
   }
   html {
     box-sizing: border-box;

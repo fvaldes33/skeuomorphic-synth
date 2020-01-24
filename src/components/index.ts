@@ -8,3 +8,5 @@ export { Speaker } from './Speaker';
 export { Grid } from './Grid';
 export { Piano } from './Piano';
 export { PianoKey } from './PianoKey';
+export { Display } from './Display';
+export { Playback } from './Playback';

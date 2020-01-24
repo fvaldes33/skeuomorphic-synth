@@ -1,9 +1,9 @@
 import React, { useState, forwardRef } from 'react';
 import styled, { IThemeStyledFunction } from '../../styled';
-import { space, SpaceProps, BackgroundProps, color } from 'styled-system';
+import { space, ColorProps, SpaceProps, BackgroundProps, color, get } from 'styled-system';
 
 type ButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-type ButtonStyleProps = IThemeStyledFunction & ButtonProps & SpaceProps & BackgroundProps & {
+type ButtonStyleProps = IThemeStyledFunction & ButtonProps & SpaceProps & ColorProps & BackgroundProps & {
   bg?: string;
   down?: boolean;
 };
@@ -14,6 +14,14 @@ const ButtonInner = styled.div`
   height: 100%;
   width: 100%;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    height: 32px;
+    width: 32px;
+  }
 `;
 
 const defaultShadowPressed = `rgba(166, 171, 189, 0) 5px 5px 10px, rgb(244, 244, 244) -5px -5px 10px, rgba(166, 171, 189, 1) 3px 5px 10px inset, rgb(238, 238, 238) 4px 4px 4px inset`;
@@ -41,6 +49,10 @@ const ButtonStyles = styled.button<ButtonStyleProps>`
       background: #DCDFE7;
       box-shadow: ${props.down ? defaultShadowPressed : defaultShadowRegular};
     `}
+
+    svg {
+      fill: ${props => get(props.theme.colors, props.color || 'dark')};
+    }
 
     ${color}
   }

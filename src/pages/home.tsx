@@ -1,5 +1,7 @@
-import React from 'react';
-import { Layout, Keyboard, Button, Slot, Speaker, Piano } from '../components';
+import React, { useEffect, useState } from 'react';
+import { Layout, Keyboard, Button, Slot, Speaker, Piano, Display, Playback } from '../components';
+import Machine from '../engine/MachineSubject';
+import { MachineState } from '../interfaces';
 
 const Home = () => {
   const fullRow = (row: number) => {
@@ -26,6 +28,17 @@ const Home = () => {
   //   ));
   // }
 
+  const [octave, setOctave] = useState<number>(4);
+  useEffect(
+    () => {
+      Machine.state$.subscribe((state: MachineState) => {
+        // console.log(state)
+        setOctave(state.octave);
+      });
+    },
+    []
+  )
+
   return (
     <>
       <Layout>
@@ -33,6 +46,7 @@ const Home = () => {
           <Slot placement="1 / 1 / span 2 / span 2">
             <Speaker />
           </Slot>
+
           <Slot placement="1 / 3 / span 1 / span 2">
             <Button />
           </Slot>
@@ -43,9 +57,17 @@ const Home = () => {
             <Button />
           </Slot>
 
+          <Slot placement="1 / 5 / span 2 / span 4">
+            <Display />
+          </Slot>
+
+          <Slot placement="4 / 1 / span 3 / span 3">
+            <Playback octave={octave}/>
+          </Slot>
+
           {fullRow(3)}
 
-          <Piano />
+          <Piano octave={octave} />
 
         </Keyboard>
       </Layout>

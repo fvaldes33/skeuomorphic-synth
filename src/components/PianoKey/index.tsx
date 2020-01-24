@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '../Button';
 import styled, { IThemeStyledFunction } from '../../styled';
 import { SpaceProps, space } from 'styled-system';
-import { playNote } from '../../engine';
+import Machine from '../../engine/MachineSubject';
 import { useKeyPress } from '../../hooks';
 
 type PianoKeyStyleProps = IThemeStyledFunction & SpaceProps & {
@@ -35,7 +35,9 @@ const PianoKey: React.FC<PianoKeyProps> = ({ octave, note, color, keyCode, ...re
   useEffect(
     () => {
       if (mouseDown) {
-        playNote(note, octave)
+        Machine.attack(note, octave)
+      } else {
+        Machine.release();
       }
     },
     [mouseDown, note, octave]
@@ -47,7 +49,6 @@ const PianoKey: React.FC<PianoKeyProps> = ({ octave, note, color, keyCode, ...re
       down={mouseDown}
       onMouseDown={() => setMouseDown(true)}
       onMouseUp={() => setMouseDown(false)}
-      onClick={() => { playNote(note, octave) }}
       {...rest} />
   );
 }
