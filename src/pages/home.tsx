@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Keyboard, Button, Slot, Speaker, Piano, Display, Playback, ModeSelect, Box, Knob, TrackSelect } from '../components';
+import { Layout, Keyboard, Button, Slot, Speaker, Piano, Display, Playback, ModeSelect, Box, Knob, TrackSelect, InstrumentSelect } from '../components';
 import Machine from '../engine/MachineSubject';
 import { MachineState } from '../interfaces';
 
@@ -71,15 +71,23 @@ const Home = () => {
             <TrackSelect />
           </Slot>
 
+          {/* Instrument Select Components */}
+          <Slot placement="3 / 9 / span 1 / span 8">
+            <InstrumentSelect/>
+          </Slot>
+
           {/* Record Play Pause Transpose Metronome Components */}
           <Slot placement="4 / 1 / span 3 / span 3">
-            <Playback octave={octave}/>
+            <Playback octave={octave} />
           </Slot>
 
           {/* Piano Keys Components */}
           <Piano octave={octave} />
 
         </Keyboard>
+        {/* <Box position="absolute" top="50%" right="0">
+          <pre>{JSON.stringify(state?.slots[0].type, null, 2)}</pre>
+        </Box> */}
       </Layout>
     </>
   );

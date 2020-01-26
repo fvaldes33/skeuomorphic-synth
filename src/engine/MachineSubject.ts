@@ -1,13 +1,29 @@
 import { Synth, Transport } from 'tone';
 import { Sound } from 'pts';
 import { BaseSubject } from './BaseSubject';
-import { MachineState, MachineStateMode } from '../interfaces';
+import { MachineState, MachineStateMode, MachineSlot } from '../interfaces';
 
 export class MachineSubject extends BaseSubject<MachineState> {
   protected store: string = 'machine-state';
 
-  public synth: Synth;
-  public sound: Sound;
+  // public sound: Sound;
+
+  get synth() {
+    const slot: undefined|MachineSlot = this.state.slots.find((slot) => slot.active);
+    if (slot && slot.synth) {
+      slot.synth.toDestination();
+      return slot.synth;
+    }
+    return null;
+  }
+
+  get sound() {
+    const slot: undefined | MachineSlot = this.state.slots.find((slot) => slot.active);
+    if (slot && slot.sound) {
+      return slot.sound;
+    }
+    return null;
+  }
 
   constructor() {
     super({
@@ -16,12 +32,18 @@ export class MachineSubject extends BaseSubject<MachineState> {
       octave: 4,
       note: null,
       isReady: false,
-      mode: MachineStateMode.Synth
+      mode: MachineStateMode.Tape,
+      slots: Array.from(Array(8).keys()).map((_: any, index: number) => {
+        const synth = new Synth();
+        return {
+          type: 'Synth',
+          synth: synth,
+          active: index === 0,
+          sound: Sound.from(synth as any, synth.context as any).analyze(64),
+          settings: {}
+        } as MachineSlot;
+      })
     });
-
-    this.synth = new Synth();
-    this.sound = Sound.from(this.synth as any, this.synth.context as any).analyze(64);
-    this.synth.toDestination();
 
     this.init();
   }
@@ -39,14 +61,18 @@ export class MachineSubject extends BaseSubject<MachineState> {
     this.patch({
       note
     });
-    this.synth.triggerAttack(note);
+    if (this.synth) {
+      this.synth.triggerAttack(note);
+    }
   }
 
   async release() {
+    if (this.synth && this.state.note) {
+      (this.synth as Synth).triggerRelease();
+    }
     this.patch({
       note: null
     })
-    this.synth.triggerRelease();
   }
 
   play() {
@@ -81,6 +107,18 @@ export class MachineSubject extends BaseSubject<MachineState> {
   setMode(value: MachineStateMode) {
     this.patch({
       mode: value
+    })
+  }
+
+  setSynth(index: number) {
+    const slots = this.state.slots.map((slot: MachineSlot, slotIndex: number) => {
+      return {
+        ...slot,
+        active: slotIndex === index
+      }
+    });
+    this.patch({
+      slots
     })
   }
 }

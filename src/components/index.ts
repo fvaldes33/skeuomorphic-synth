@@ -13,3 +13,4 @@ export { Playback } from './Playback';
 export { ModeSelect } from './ModeSelect';
 export { Knob } from './Knob';
 export { TrackSelect } from './TrackSelect';
+export { InstrumentSelect } from './InstrumentSelect';
