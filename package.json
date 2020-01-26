@@ -11,6 +11,8 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "ecma-proposal-math-extensions": "^0.0.2",
+    "lodash": "^4.17.15",
+    "polished": "^3.4.2",
     "pts": "^0.8.11",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -43,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.149",
     "@types/styled-components": "^4.4.2",
     "@types/styled-system": "^5.1.4",
     "babel-plugin-styled-components": "^1.10.6",

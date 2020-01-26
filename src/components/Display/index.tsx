@@ -19,6 +19,7 @@ const DisplayStyles = styled(Box)`
   * {
     margin: 0;
     color: white;
+    user-select: none;
   }
 
   canvas {
@@ -48,8 +49,6 @@ const Display: React.FC<any> = () => {
             let area = space.size.$divide(1);
             let idx = space.pointer.$divide(area).floor();
             let rect = [idx.$multiply(area), idx.$multiply(area).add(area)];
-            // let t1 = Machine.sound.timeDomainTo(area, rect[0].$subtract(0, area.y / 2));
-            // let t2 = t1.map(t => t.$add(0, area.y)).reverse();
             let freqs: any = Machine.sound.freqDomainTo([area.x, area.y / 2], [rect[0].x, 0]).map(f => [[f.x, rect[0].y + area.y / 2 - f.y], [f.x, rect[0].y + area.y / 2 + f.y]]);
 
             form.stroke('#2E3337');

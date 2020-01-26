@@ -1,7 +1,7 @@
 import { Synth, Transport } from 'tone';
 import { Sound } from 'pts';
 import { BaseSubject } from './BaseSubject';
-import { MachineState } from '../interfaces';
+import { MachineState, MachineStateMode } from '../interfaces';
 
 export class MachineSubject extends BaseSubject<MachineState> {
   protected store: string = 'machine-state';
@@ -15,12 +15,15 @@ export class MachineSubject extends BaseSubject<MachineState> {
       bpm: 120,
       octave: 4,
       note: null,
-      isReady: false
+      isReady: false,
+      mode: MachineStateMode.Synth
     });
 
     this.synth = new Synth();
     this.sound = Sound.from(this.synth as any, this.synth.context as any).analyze(64);
     this.synth.toDestination();
+
+    this.init();
   }
 
   async init() {
@@ -72,6 +75,12 @@ export class MachineSubject extends BaseSubject<MachineState> {
     Transport.bpm.value = value;
     this.patch({
       bpm: value
+    })
+  }
+
+  setMode(value: MachineStateMode) {
+    this.patch({
+      mode: value
     })
   }
 }
