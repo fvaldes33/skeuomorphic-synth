@@ -80,9 +80,6 @@ const Home = () => {
           <Piano octave={octave} />
 
         </Keyboard>
-        <Box position="absolute" top="50%" right="0">
-          <pre>{JSON.stringify(state, null, 2)}</pre>
-        </Box>
       </Layout>
     </>
   );
