@@ -1,15 +1,23 @@
 import { Synth, Transport } from 'tone';
-import { Sound } from 'pts';
 import { BaseSubject } from './BaseSubject';
-import { MachineState, MachineStateMode, MachineSlot } from '../interfaces';
+import { MachineState, MachineStateMode, SynthSubjectType } from '../interfaces';
+import SynthSubject from './SynthSubject';
 
 export class MachineSubject extends BaseSubject<MachineState> {
   protected store: string = 'machine-state';
 
   // public sound: Sound;
 
+  get subject() {
+    const slot: undefined | SynthSubjectType = this.state.slots.find((slot) => slot.active);
+    if (slot && slot.subject) {
+      return slot.subject;
+    }
+    return null;
+  }
+
   get synth() {
-    const slot: undefined|MachineSlot = this.state.slots.find((slot) => slot.active);
+    const slot: undefined | SynthSubjectType = this.state.slots.find((slot) => slot.active);
     if (slot && slot.synth) {
       slot.synth.toDestination();
       return slot.synth;
@@ -18,7 +26,7 @@ export class MachineSubject extends BaseSubject<MachineState> {
   }
 
   get sound() {
-    const slot: undefined | MachineSlot = this.state.slots.find((slot) => slot.active);
+    const slot: undefined | SynthSubjectType = this.state.slots.find((slot) => slot.active);
     if (slot && slot.sound) {
       return slot.sound;
     }
@@ -34,14 +42,13 @@ export class MachineSubject extends BaseSubject<MachineState> {
       isReady: false,
       mode: MachineStateMode.Tape,
       slots: Array.from(Array(8).keys()).map((_: any, index: number) => {
-        const synth = new Synth();
+        const synth = new SynthSubject();
         return {
-          type: 'Synth',
-          synth: synth,
           active: index === 0,
-          sound: Sound.from(synth as any, synth.context as any).analyze(64),
-          settings: {}
-        } as MachineSlot;
+          subject: synth,
+          synth: synth.state.synth,
+          sound: synth.state.sound
+        };
       })
     });
 
@@ -91,6 +98,42 @@ export class MachineSubject extends BaseSubject<MachineState> {
     })
   }
 
+  updateEnvelope(knob: number, value: number) {
+    if (this.synth) {
+      let { attack, decay, sustain, release } = this.synth.envelope;
+      switch (knob) {
+        case 1:
+          attack = value / (360 / 2);
+          break;
+        case 2:
+          decay = value / (360 / 2);
+          break;
+        case 3:
+          sustain = value / (360 / 1);
+          break;
+        case 4:
+          release = value / (360 / 3);
+          break;
+      }
+
+      this.subject.setEnvelope({
+        attack,
+        decay,
+        sustain,
+        release
+      });
+    }
+  }
+
+  setKnobValue(knob: number, value: number) {
+    const { mode } = this.state;
+    switch (mode) {
+      case MachineStateMode.Synth:
+        this.updateEnvelope(knob, value);
+        break;
+    }
+  }
+
   setOctave(value: number) {
     this.patch({
       octave: value
@@ -111,7 +154,7 @@ export class MachineSubject extends BaseSubject<MachineState> {
   }
 
   setSynth(index: number) {
-    const slots = this.state.slots.map((slot: MachineSlot, slotIndex: number) => {
+    const slots = this.state.slots.map((slot: SynthSubjectType, slotIndex: number) => {
       return {
         ...slot,
         active: slotIndex === index

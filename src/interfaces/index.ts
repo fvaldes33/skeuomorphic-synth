@@ -1,4 +1,4 @@
-import { Synth, AMSynth, FMSynth, MembraneSynth, MetalSynth, MonoSynth } from "tone";
+import { Synth, EnvelopeOptions } from "tone";
 import { Sound } from "pts";
 
 export enum MachineStateMode {
@@ -8,14 +8,6 @@ export enum MachineStateMode {
   Mixer = 'mixer'
 }
 
-export interface MachineSlot {
-  type: string;
-  synth: Synth | AMSynth | FMSynth | MembraneSynth | MetalSynth | MonoSynth;
-  sound: Sound;
-  settings?: any;
-  active: boolean;
-}
-
 export interface MachineState {
   playing: boolean;
   isReady: boolean;
@@ -23,9 +15,20 @@ export interface MachineState {
   octave: number;
   note?: string|null;
   mode: MachineStateMode;
-  slots: MachineSlot[];
+  slots: any[];
 }
 
 export interface MetronomeState {
   enabled: boolean;
+}
+
+export interface SynthState {
+  synth: Synth;
+  oscillator: OscillatorType;
+  envelope: EnvelopeOptions;
+  sound?: Sound;
+}
+
+export interface SynthSubjectType extends SynthState {
+  subject: any;
 }

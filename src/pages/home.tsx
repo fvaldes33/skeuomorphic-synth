@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Keyboard, Button, Slot, Speaker, Piano, Display, Playback, ModeSelect, Box, Knob, TrackSelect, InstrumentSelect } from '../components';
+import { Layout, Keyboard, Button, Slot, Speaker, Piano, Display, Playback, ModeSelect, Knob, TrackSelect, InstrumentSelect } from '../components';
 import Machine from '../engine/MachineSubject';
 import { MachineState } from '../interfaces';
 
@@ -12,14 +12,12 @@ const Home = () => {
   //   ));
   // }
 
-  const [state, setState] = useState<MachineState>();
   const [octave, setOctave] = useState<number>(4);
+
   useEffect(
     () => {
       Machine.state$.subscribe((state: MachineState) => {
-        // console.log(state)
         setOctave(state.octave);
-        setState(state);
       });
     },
     []
@@ -49,16 +47,16 @@ const Home = () => {
 
           {/* Knob Components */}
           <Slot placement="1 / 9 / span 2 / span 2">
-            <Knob bg="primary" value={45} onChange={(e) => console.log(e)} />
+            <Knob bg="primary" value={45} onChange={(e) => Machine.setKnobValue(1, e)} />
           </Slot>
           <Slot placement="1 / 11 / span 2 / span 2">
-            <Knob bg="secondary" value={135} onChange={(e) => console.log(e)} />
+            <Knob bg="secondary" value={135} onChange={(e) => Machine.setKnobValue(2, e)} />
           </Slot>
           <Slot placement="1 / 13 / span 2 / span 2">
-            <Knob bg="white" value={90} onChange={(e) => console.log(e)} />
+            <Knob bg="white" value={90} onChange={(e) => Machine.setKnobValue(3, e)} />
           </Slot>
           <Slot placement="1 / 15 / span 2 / span 2">
-            <Knob bg="tertiary" value={45} onChange={(e) => console.log(e)} />
+            <Knob bg="tertiary" value={45} onChange={(e) => Machine.setKnobValue(4, e)} />
           </Slot>
 
           {/* Mode Select Components */}
@@ -85,9 +83,7 @@ const Home = () => {
           <Piano octave={octave} />
 
         </Keyboard>
-        {/* <Box position="absolute" top="50%" right="0">
-          <pre>{JSON.stringify(state?.slots[0].type, null, 2)}</pre>
-        </Box> */}
+
       </Layout>
     </>
   );
