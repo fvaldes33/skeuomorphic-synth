@@ -11,7 +11,7 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "ecma-proposal-math-extensions": "^0.0.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "polished": "^3.4.2",
     "pts": "^0.8.11",
     "react": "^16.12.0",
